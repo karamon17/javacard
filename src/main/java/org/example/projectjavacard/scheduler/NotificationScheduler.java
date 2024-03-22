@@ -53,6 +53,7 @@ public class NotificationScheduler {
         mailMessage.setTo(recipient);
         mailMessage.setSubject("Уведомление о вашей банковской карте");
         mailMessage.setText(message);
+        mailMessage.setFrom("gevorg0793@bk.ru");
         emailSender.send(mailMessage);
     }
 }
