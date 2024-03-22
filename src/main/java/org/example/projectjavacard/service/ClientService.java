@@ -12,14 +12,15 @@ public class ClientService {
 
 
 
-    public Client createClient(Client client) {
+    public Long createClient(Client client) {
         // Проверяем, существует ли клиент с таким именем
         Client existingClient = clientRepository.findByFullName(client.getFullName());
         if (existingClient != null) {
-            return existingClient; // Если клиент уже существует, возвращаем его
+            return existingClient.getId(); // Если клиент уже существует, возвращаем его id
         }
         // Если клиент не существует, сохраняем его в базу данных
-        return clientRepository.save(client);
+        clientRepository.save(client);
+        return client.getId();
     }
 
     public Client getClientById(Long id) {
