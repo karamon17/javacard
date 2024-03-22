@@ -21,18 +21,16 @@ public class NotificationScheduler {
     private final JavaMailSender emailSender;
 
     // Метод, который будет запускаться каждый день в определенное время (например, в полночь)
-    @Scheduled(cron = "*/3 * * * * *")
+    @Scheduled(cron = "*/3 * * * * *") //todo поменять на "0 0 9 * * *" для запуска в 9 часов ежедневно
     public void sendExpirationNotifications() {
-        System.out.println("Sending expiration notifications");
         // Получаем список карт, которые истекают сегодня и отправляем уведомления
         List<BankCard> expiredCards = bankCardService.getExpiredBankCards();
         for (BankCard card : expiredCards) {
             String message = "Уважаемый клиент, ваша карта " + card.getCardNumber() + " истекла";
             System.out.println("Sending message: " + message);
             bankCardService.cancelBankCard(card.getId());
-//            System.out.println(card.getOwner().getEmail());
             sendNotification(card.getOwner().getEmail(), message);
-            //сюда добавить автоматический выпуск новой карты
+            bankCardService.generateNewCard(card.getOwner().getId());
         }
 
         // Получаем список карт, которые истекают через неделю

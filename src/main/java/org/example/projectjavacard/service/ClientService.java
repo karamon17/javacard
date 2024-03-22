@@ -10,6 +10,8 @@ import org.springframework.stereotype.Service;
 public class ClientService {
     private ClientRepo clientRepository;
 
+
+
     public Client createClient(Client client) {
         // Проверяем, существует ли клиент с таким именем
         Client existingClient = clientRepository.findByFullName(client.getFullName());
@@ -20,4 +22,7 @@ public class ClientService {
         return clientRepository.save(client);
     }
 
+    public Client getClientById(Long id) {
+        return clientRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Client with id " + id + " not found."));
+    }
 }
