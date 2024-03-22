@@ -64,9 +64,15 @@ public class BankCardService {
                 cardNumber.append(" ");
             }
         }
-        //todo проверять уникальность номера карты при заведении сравнить с номерами карт в базе
+        //проверка уникальности номера карты, сравнение существующих карт с новой
+        String cardNumberStr = cardNumber.toString();
+        bankCardRepository.findAll().forEach(bankCard1 -> {
+            if (bankCard1.getCardNumber().equals(cardNumberStr)) {
+                generateNewCard(id);
+            }
+        });
 
-        bankCard.setCardNumber(cardNumber.toString());
+        bankCard.setCardNumber(cardNumberStr);
         bankCard.setExpirationDate(LocalDate.now().plusYears(4));
         bankCard.setIsActive(true);
         bankCard.setIssueDate(LocalDate.now());
