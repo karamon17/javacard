@@ -33,7 +33,7 @@ public class BankCardController {
         catch (RuntimeException e) {
             return new ResponseEntity<>("В базе данных такой карты не найдено", HttpStatus.NOT_FOUND);
         }
-        
+
     }
 
     @GetMapping("/{clientEmail}")
