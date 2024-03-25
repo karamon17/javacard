@@ -28,7 +28,7 @@ public class NotificationScheduler {
         for (BankCard card : expiredCards) {
             String message = "Уважаемый клиент, ваша карта " + card.getCardNumber() + " истекла";
             System.out.println("Sending message: " + message);
-            bankCardService.cancelBankCard(card.getId());
+            bankCardService.deactivateBankCard(card.getId());
             sendNotification(card.getOwner().getEmail(), message);
             bankCardService.generateNewCard(card.getOwner().getId());
         }

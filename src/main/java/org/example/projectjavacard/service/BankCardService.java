@@ -2,7 +2,7 @@ package org.example.projectjavacard.service;
 
 import lombok.AllArgsConstructor;
 import org.example.projectjavacard.domain.BankCard;
-import org.example.projectjavacard.repos.BankCardRepo;
+import org.example.projectjavacard.repos.BankCardRepository;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -13,22 +13,15 @@ import java.util.Random;
 @Service
 @AllArgsConstructor
 public class BankCardService {
-    private BankCardRepo bankCardRepository;
+    private BankCardRepository bankCardRepository;
     private ClientService clientService;
     private final Random random = new Random();
 
-    public BankCard createBankCard(BankCard bankCard) {
-        // Здесь можно добавить дополнительные проверки, например, уникальность номера карты
-        return bankCardRepository.save(bankCard);
-    }
-
-    public void cancelBankCard(Long bankCardId) {
+    public void deactivateBankCard(Long bankCardId) {
         Optional<BankCard> optionalBankCard = bankCardRepository.findById(bankCardId);
         if (optionalBankCard.isPresent()) {
             BankCard bankCard = optionalBankCard.get();
-            // Устанавливаем статус карты как неактивный
             bankCard.setIsActive(false);
-            // Сохраняем обновленную карту в базу данных
             bankCardRepository.save(bankCard);
         } else {
             throw new IllegalArgumentException("Bank card with id " + bankCardId + " not found.");
@@ -50,7 +43,7 @@ public class BankCardService {
      * Создает карту и сохраняет в базу данных
      * @param id идентификатор клиента
      */
-    public void generateNewCard(Long id) {
+    public BankCard generateNewCard(Long id) {
         BankCard bankCard = new BankCard();
         bankCard.setOwner(clientService.getClientById(id));
 
@@ -77,5 +70,18 @@ public class BankCardService {
         bankCard.setIsActive(true);
         bankCard.setIssueDate(LocalDate.now());
         bankCardRepository.save(bankCard);
+        return bankCard;
+    }
+
+    public BankCard findByCardNumber(String cardNumber) {
+        return bankCardRepository.findByCardNumber(cardNumber);
+    }
+
+    public List<BankCard> getCards(Long clientId) {
+        return bankCardRepository.findByOwnerId(clientId);
+    }
+
+    public void save(BankCard card) {
+        bankCardRepository.save(card);
     }
 }
