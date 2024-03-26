@@ -16,6 +16,8 @@ public class Client {
     private Long id;
     private String fullName;
     private LocalDate birthDate;
+
+    @Column(unique = true, nullable = false)
     private String email;
 
     @Override
