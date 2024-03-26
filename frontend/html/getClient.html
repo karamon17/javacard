@@ -3,35 +3,34 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Get Client Form</title>
-    <style>
-        #clientInfo {
-            display: none; /* Скрыть блок с информацией о клиенте по умолчанию */
-        }
-    </style>
+    <title>Client Info</title>
 </head>
 <body>
-<h1>Get Client by Email</h1>
+<h1>Client Info</h1>
 <form id="getClientForm">
     <label for="clientEmail">Client Email:</label>
     <input type="email" id="clientEmail" name="clientEmail" required><br><br>
     <button type="submit">Get Client</button>
 </form>
 
-<div id="clientInfo">
+<div id="clientInfo" style="display: none;">
     <h2>Client Info</h2>
     <p><strong>Full Name:</strong> <span id="fullName"></span></p>
     <p><strong>Email:</strong> <span id="email"></span></p>
+    <h2>Client Cards</h2>
+    <ul id="clientCards"></ul>
 </div>
 
-<script>
-    document.getElementById('getClientForm').addEventListener('submit', function(event) {
-        event.preventDefault(); // Prevent the default form submission
+<p id="error" style="display: none; color: red;">Client not found in the database.</p>
+
+    <script>
+        document.getElementById('getClientForm').addEventListener('submit', function(event) {
+            event.preventDefault(); // Prevent the default form submission
 
         // Get client email
         const clientEmail = document.getElementById('clientEmail').value;
 
-        // Send GET request to backend
+        // Send GET request to backend to get client info
         fetch(`http://localhost:8080/clients/${clientEmail}`, {
             method: 'GET',
             headers: {
@@ -41,14 +40,43 @@
             .then(response => response.json())
             .then(data => {
                 // Show client info block
+                document.getElementById('error').style.display = 'none';
                 document.getElementById('clientInfo').style.display = 'block';
 
                 // Update client info on the page
                 document.getElementById('fullName').textContent = data.fullName;
                 document.getElementById('email').textContent = data.email;
+
+                // Send another GET request to backend to get client cards
+                fetch(`http://localhost:8080/cards/${clientEmail}`, {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                })
+                    .then(response => response.json())
+                    .then(cardsData => {
+                        // Update client cards on the page
+                        const clientCardsUl = document.getElementById('clientCards');
+                        clientCardsUl.innerHTML = ''; // Clear previous cards
+
+                        cardsData.forEach(card => {
+                            const cardElement = document.createElement('li');
+                            cardElement.textContent = `Card Number: ${card.cardNumber}`;
+                            clientCardsUl.appendChild(cardElement);
+                        });
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                    });
             })
             .catch(error => {
-                console.error('Error:', error);
+                // Hide client info block
+                document.getElementById('clientInfo').style.display = 'none';
+
+                // Show error message
+                document.getElementById('error').style.display = 'block';
+                // document.getElementById('error').textContent = error.message;
             });
     });
 </script>
