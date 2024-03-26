@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Client Form</title>
+</head>
+<body>
+<h1>Create Client</h1>
+<form id="createClientForm">
+    <label for="fullName">Full Name:</label>
+    <input type="text" id="fullName" name="fullName" required><br><br>
+
+    <label for="email">Email:</label>
+    <input type="email" id="email" name="email" required><br><br>
+
+    <label for="birthDate">Date of birth:</label>
+    <input type="date" id="birthDate" name="birthDate" required><br><br>
+
+    <button type="submit">Create</button>
+</form>
+
+<script>
+    document.getElementById('createClientForm').addEventListener('submit', function(event) {
+        event.preventDefault(); // Prevent the default form submission
+
+        // Get form data
+        const formData = {
+            fullName: document.getElementById('fullName').value,
+            email: document.getElementById('email').value,
+            birthDate: document.getElementById('birthDate').value
+        };
+
+        // Send POST request to backend
+        fetch('http://localhost:8080/clients', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(formData)
+        })
+            .then(response => {
+                if (response.ok) {
+                    console.log('Client created successfully');
+                    // Optionally redirect to another page or show a success message
+                } else {
+                    console.error('Failed to create client');
+                    // Optionally show an error message
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+    });
+</script>
+</body>
+</html>

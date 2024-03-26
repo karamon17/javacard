@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Card Form</title>
+</head>
+<body>
+<h1>Create Card</h1>
+<form id="createCardForm">
+    <label for="email">Email:</label>
+    <input type="email" id="email" name="email" required><br><br>
+
+    <button type="submit">Create</button>
+</form>
+
+<script>
+    document.getElementById('createCardForm').addEventListener('submit', function(event) {
+        event.preventDefault(); // Prevent the default form submission
+
+        // Get form data
+        const email =  document.getElementById('email').value;
+
+        // Send POST request to backend
+        fetch(`http://localhost:8080/cards/generate?email=${email}`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+        })
+            .then(response => {
+                if (response.ok) {
+                    console.log('Card created successfully');
+                    // Optionally redirect to another page or show a success message
+                } else {
+                    console.error('Failed to create Card');
+                    // Optionally show an error message
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+    });
+</script>
+</body>
+</html>
