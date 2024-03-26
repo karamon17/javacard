@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Get Client Form</title>
+    <style>
+        #clientInfo {
+            display: none; /* Скрыть блок с информацией о клиенте по умолчанию */
+        }
+    </style>
+</head>
+<body>
+<h1>Get Client by Email</h1>
+<form id="getClientForm">
+    <label for="clientEmail">Client Email:</label>
+    <input type="email" id="clientEmail" name="clientEmail" required><br><br>
+    <button type="submit">Get Client</button>
+</form>
+
+<div id="clientInfo">
+    <h2>Client Info</h2>
+    <p><strong>Full Name:</strong> <span id="fullName"></span></p>
+    <p><strong>Email:</strong> <span id="email"></span></p>
+</div>
+
+<script>
+    document.getElementById('getClientForm').addEventListener('submit', function(event) {
+        event.preventDefault(); // Prevent the default form submission
+
+        // Get client email
+        const clientEmail = document.getElementById('clientEmail').value;
+
+        // Send GET request to backend
+        fetch(`http://localhost:8080/clients/${clientEmail}`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
+            .then(response => response.json())
+            .then(data => {
+                // Show client info block
+                document.getElementById('clientInfo').style.display = 'block';
+
+                // Update client info on the page
+                document.getElementById('fullName').textContent = data.fullName;
+                document.getElementById('email').textContent = data.email;
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+    });
+</script>
+</body>
+</html>
