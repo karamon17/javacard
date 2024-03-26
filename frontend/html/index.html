@@ -6,16 +6,36 @@
     <title>Bootstrap Frontend</title>
     <!-- Подключение Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            padding: 20px;
+        }
+    </style>
 </head>
 <body>
 
-<a href="createClient.html">Создать клиента</a>
-<br>
-<a href="createCard.html">Создать карту</a>
-<br>
-<a href="getClient.html">Найти клиента</a>
-<br>
-<a href="deactivateCard.html">Деактивировать карту</a>
+<div class="container">
+    <div class="row">
+        <div class="col">
+            <h1>Меню</h1>
+            <ul class="list-group">
+                <li class="list-group-item">
+                    <a href="createClient.html">Создать клиента</a>
+                </li>
+                <li class="list-group-item">
+                    <a href="createCard.html">Создать карту</a>
+                </li>
+                <li class="list-group-item">
+                    <a href="getClient.html">Найти клиента</a>
+                </li>
+                <li class="list-group-item">
+                    <a href="deactivateCard.html">Деактивировать карту</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+
 <!-- Подключение Bootstrap JS и jQuery (необходимо для некоторых компонентов Bootstrap) -->
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>

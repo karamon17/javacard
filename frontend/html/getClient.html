@@ -4,26 +4,39 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>О клиенте</title>
+    <!-- Подключение Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
-<h1>О клиенте</h1>
-<form id="getClientForm">
-    <label for="clientEmail">Email клиента:</label>
-    <input type="email" id="clientEmail" name="clientEmail" required><br><br>
-    <button type="submit">Найти клиента</button>
-</form>
+<nav class="navbar">
+    <form class="container-fluid justify-content-start">
+        <a class="btn btn-outline-primary btn-sm me-2" href="index.html">На главную</a>
+    </form>
+</nav>
+<div class="container">
+    <h1 class="mt-5">О клиенте</h1>
+    <form id="getClientForm" class="mt-3">
+        <div class="mb-3">
+            <label for="clientEmail" class="form-label">Email клиента:</label>
+            <input type="email" class="form-control" id="clientEmail" name="clientEmail" required>
+        </div>
+        <button type="submit" class="btn btn-primary">Найти клиента</button>
+    </form>
 
-<div id="clientInfo" style="display: none;">
-    <h2>О клиенте</h2>
-    <p><strong>ФИО:</strong> <span id="fullName"></span></p>
-    <p><strong>Email:</strong> <span id="email"></span></p>
-    <h2>Карты клиента</h2>
-    <ul id="clientCards"></ul>
+    <div id="clientInfo" class="mt-3" style="display: none;">
+        <h2>О клиенте</h2>
+        <p><strong>ФИО:</strong> <span id="fullName"></span></p>
+        <p><strong>Email:</strong> <span id="email"></span></p>
+        <h2>Карты клиента</h2>
+        <ul id="clientCards"></ul>
+    </div>
+
+    <p id="error" class="mt-3" style="display: none; color: red;">Клиент не найден в базе данных</p>
 </div>
 
-<p id="error" style="display: none; color: red;">Клиент не найден в базе данных</p>
-<br>
-<a href="index.html">Назад</a>
-    <script src="../js/getClient.js"></script>
+<!-- Подключение Bootstrap JS и jQuery (необходимо для некоторых компонентов Bootstrap) -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+<script src="../js/getClient.js"></script>
 </body>
 </html>
