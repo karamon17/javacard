@@ -26,6 +26,8 @@ public class ClientService {
     }
 
     public Client getClientByEmail(String email) {
+        if (clientRepository.findByEmail(email) == null)
+            throw new IllegalArgumentException("Client with email " + email + " not found.");
         return clientRepository.findByEmail(email);
     }
 }

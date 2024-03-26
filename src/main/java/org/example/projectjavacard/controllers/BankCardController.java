@@ -20,8 +20,13 @@ public class BankCardController {
 
     @GetMapping("/generate")
     public ResponseEntity<BankCard> generateBankCard(@RequestParam String email) {
-        BankCard createdCard = bankCardService.generateNewCard(clientService.getClientByEmail(email).getId());
-        return new ResponseEntity<>(createdCard, HttpStatus.CREATED);
+        try {
+            BankCard createdCard = bankCardService.generateNewCard(clientService.getClientByEmail(email).getId());
+            return new ResponseEntity<>(createdCard, HttpStatus.CREATED);
+        }
+        catch (RuntimeException e) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
     }
 
     @GetMapping("/deactivate")

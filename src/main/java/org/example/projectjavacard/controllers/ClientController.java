@@ -23,8 +23,10 @@ public class ClientController {
     @GetMapping("/{clientEmail}")
     public ResponseEntity<Client> getClient(@PathVariable String clientEmail) {
         Client client = clientService.getClientByEmail(clientEmail);
+        if (client == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
         return new ResponseEntity<>(client, HttpStatus.OK);
     }
-
 }
 

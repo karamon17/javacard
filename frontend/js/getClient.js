@@ -11,7 +11,13 @@ document.getElementById('getClientForm').addEventListener('submit', function(eve
             'Content-Type': 'application/json'
         }
     })
-        .then(response => response.json())
+        .then(response => {
+            if (response.ok) {
+                return response.json();
+            } else {
+                throw new Error('Клиент не найден в базе данных.');
+            }
+        })
         .then(data => {
             // Show client info block
             document.getElementById('error').style.display = 'none';
@@ -28,17 +34,27 @@ document.getElementById('getClientForm').addEventListener('submit', function(eve
                     'Content-Type': 'application/json'
                 }
             })
-                .then(response => response.json())
+                .then(response => {
+                    if (response.ok) {
+                        return response.json();
+                    } else {
+                        throw new Error('Error fetching client cards.');
+                    }
+                })
                 .then(cardsData => {
                     // Update client cards on the page
                     const clientCardsUl = document.getElementById('clientCards');
                     clientCardsUl.innerHTML = ''; // Clear previous cards
 
-                    cardsData.forEach(card => {
-                        const cardElement = document.createElement('li');
-                        cardElement.textContent = `Card Number: ${card.cardNumber}`;
-                        clientCardsUl.appendChild(cardElement);
-                    });
+                    if (Array.isArray(cardsData)) {
+                        cardsData.forEach(card => {
+                            const cardElement = document.createElement('li');
+                            cardElement.textContent = `Card Number: ${card.cardNumber}`;
+                            clientCardsUl.appendChild(cardElement);
+                        });
+                    } else {
+                        throw new Error('Client cards data is not an array.');
+                    }
                 })
                 .catch(error => {
                     console.error('Error:', error);
@@ -50,6 +66,6 @@ document.getElementById('getClientForm').addEventListener('submit', function(eve
 
             // Show error message
             document.getElementById('error').style.display = 'block';
-            // document.getElementById('error').textContent = error.message;
+            document.getElementById('error').textContent = error.message;
         });
 });
