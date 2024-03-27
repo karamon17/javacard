@@ -10,4 +10,7 @@ public class ProjectJavaCardApplication {
         SpringApplication.run(ProjectJavaCardApplication.class, args);
     }
     //todo ко всем методам написать javadoc комментарии
+    //todo unit тесты покрытие coverage более 90%
+    //todo завернуть в докер
+    //todo написать readme
 }

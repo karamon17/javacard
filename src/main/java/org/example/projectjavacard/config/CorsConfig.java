@@ -1,4 +1,4 @@
-package org.example.projectjavacard.controllers;
+package org.example.projectjavacard.config;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
