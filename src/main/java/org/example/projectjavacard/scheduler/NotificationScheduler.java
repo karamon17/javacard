@@ -18,7 +18,7 @@ import java.util.List;
 public class NotificationScheduler {
 
     private final BankCardService bankCardService;
-    private final JavaMailSender emailSender;
+    private final JavaMailSender emailSender; //ide подчеркивает, но на работоспособность не влияет
 
     // Метод, который будет запускаться каждый день в определенное время (например, в полночь)
     @Scheduled(cron = "*/3 * * * * *") //todo поменять на "0 0 9 * * *" для запуска в 9 часов ежедневно
