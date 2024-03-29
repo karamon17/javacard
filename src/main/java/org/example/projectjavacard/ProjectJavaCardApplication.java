@@ -9,7 +9,7 @@ public class ProjectJavaCardApplication {
     public static void main(String[] args) {
         SpringApplication.run(ProjectJavaCardApplication.class, args);
     }
-    //todo unit тесты покрытие coverage более 90%
     //todo завернуть в докер
     //todo написать readme
+    //todo сделать презениацию для защиты
 }
