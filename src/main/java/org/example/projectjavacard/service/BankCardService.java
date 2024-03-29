@@ -17,6 +17,10 @@ public class BankCardService {
     private ClientService clientService;
     private final Random random = new Random();
 
+    /**
+     * Метод для деактивации карты
+     * @param bankCardId идентификатор карты
+     */
     public void deactivateBankCard(Long bankCardId) {
         Optional<BankCard> optionalBankCard = bankCardRepository.findById(bankCardId);
         if (optionalBankCard.isPresent()) {
@@ -28,19 +32,29 @@ public class BankCardService {
         }
     }
 
+    /**
+     * Метод для получения списка карт, которые уже истекли
+     * @return список карт, которые уже истекли
+     */
     public List<BankCard> getExpiredBankCards() {
         List<BankCard> list = bankCardRepository.findByExpirationDateBefore(LocalDate.now());
         list.removeIf(bankCard -> !bankCard.getIsActive());
         return list;
     }
 
+    /**
+     * Метод для получения списка карт, которые истекают в течение недели
+     * @param currentDate текущая дата
+     * @param expirationDateWeekFromNow дата, через неделю
+     * @return список карт, которые истекают в течение недели
+     */
     public List<BankCard> getExpiringBankCards(LocalDate currentDate, LocalDate expirationDateWeekFromNow) {
         return bankCardRepository.findByExpirationDateBetween(currentDate, expirationDateWeekFromNow);
     }
 
     /**
      * Метод для генерации новой карты для клиента
-     * Создает карту и сохраняет в базу данных
+     * Создает карту, проверяет уникальность и сохраняет в базу данных
      * @param id идентификатор клиента
      */
     public BankCard generateNewCard(Long id) {
@@ -73,14 +87,28 @@ public class BankCardService {
         return bankCard;
     }
 
+    /**
+     * Метод для поиска карты по номеру
+     * @param cardNumber номер карты
+     * @return карта
+     */
     public BankCard findByCardNumber(String cardNumber) {
         return bankCardRepository.findByCardNumber(cardNumber);
     }
 
+    /**
+     * Метод для получения списка карт клиента
+     * @param clientId идентификатор клиента
+     * @return список карт клиента
+     */
     public List<BankCard> getCards(Long clientId) {
         return bankCardRepository.findByOwnerId(clientId);
     }
 
+    /**
+     * Метод для сохранения карты
+     * @param card карта
+     */
     public void save(BankCard card) {
         bankCardRepository.save(card);
     }
