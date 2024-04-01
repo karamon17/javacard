@@ -16,13 +16,13 @@ document.getElementById('createCardForm').addEventListener('submit', function(ev
                 console.log('Card created successfully');
                 document.getElementById('errorMessage').style.display = 'none';
                 document.getElementById('successMessage').style.display = 'block';
-                document.getElementById('createClientForm').reset();
+                // document.getElementById('createCardForm').reset();
             }
             else if (response.status === 404) {
                 console.error('Клиент не найден');
                 document.getElementById('successMessage').style.display = 'none';
                 document.getElementById('errorMessage').style.display = 'block';
-                document.getElementById('createClientForm').reset();// Optionally show an error message
+                document.getElementById('createCardForm').reset();// Optionally show an error message
             }
             else {
                 console.error('Failed to create Card');
