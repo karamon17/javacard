@@ -18,9 +18,9 @@ import java.util.List;
 public class NotificationScheduler {
 
     private final BankCardService bankCardService;
-    private final JavaMailSender emailSender; //ide подчеркивает, но на работоспособность не влияет
+    private final JavaMailSender emailSender;
 
-    // Метод, который будет запускаться каждый день в в 9.00
+    // Метод, который будет запускаться каждый день в 9.00
     @Scheduled(cron = "0 0 9 * * *")
     public void sendExpirationNotifications() {
         // Получаем список карт, которые истекают сегодня и отправляем уведомления
